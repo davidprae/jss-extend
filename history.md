@@ -1,3 +1,7 @@
+## 1.2.1 / 2016-03-24
+
+- update babel
+
 ## 1.2.0 / 2016-02-03
 
 - perf enhancement, don't generate a function upon each plugin call
