@@ -1,3 +1,4 @@
+const warn = console.warn.bind(console) // eslint-disable-line no-console
 /**
  * Handle `extend` property.
  *
@@ -9,7 +10,10 @@ export default function jssExtend() {
     if (typeof style.extend == 'string') {
       if (rule.options && rule.options.sheet) {
         const refRule = rule.options.sheet.getRule(style.extend)
-        if (refRule) extend(rule, newStyle, refRule.originalStyle)
+        if (refRule) {
+          if (refRule === rule) warn(`A rule tries to extend itself \r\n${rule.toString()}`)
+          else extend(rule, newStyle, refRule.originalStyle)
+        }
       }
     }
     else if (Array.isArray(style.extend)) {

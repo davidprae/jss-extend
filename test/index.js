@@ -61,3 +61,14 @@ test('extend using rule name', function () {
   ok(ss.rules.b)
   equal(ss.toString(), 'a {\n  float: left;\n}\nb {\n  float: left;\n  width: 1px;\n}')
 })
+
+test('error if extend using same rule name', function () {
+  var ss = jss.createStyleSheet({
+    a: {
+      extend: 'a',
+      width: '1px'
+    }
+  }, {named: false})
+  ok(ss.rules.a)
+  equal(ss.toString(), 'a {\n  width: 1px;\n}')
+})
