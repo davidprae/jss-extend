@@ -1,7 +1,7 @@
 {
   "name": "jss-extend",
   "description": "JSS plugin that enables inheritance",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "Oleg Slobodskoi",
     "email": "oleg008@gmail.com"

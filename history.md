@@ -1,3 +1,7 @@
+## 2.0.1 / 2016-08-01
+
+- fix regression because of merge
+
 ## 2.0.0 / 2016-08-01
 
 - update to jss 5
