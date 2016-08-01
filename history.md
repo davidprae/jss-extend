@@ -1,3 +1,8 @@
+## 2.0.0 / 2016-08-01
+
+- update to jss 5
+- update dev deps
+
 ## 1.2.1 / 2016-03-24
 
 - update babel

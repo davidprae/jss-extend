@@ -1,5 +1,7 @@
 'use strict'
 
+var jss = window.jss.default
+
 QUnit.module('Extend plugin', {
   setup: function () {
     jss.use(jssExtend.default())
