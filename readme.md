@@ -4,10 +4,11 @@
 
 This plugin implements a custom `extend` style property.
 
-[Demo](http://jsstyles.github.io/examples/index.html#plugin-jss-extend) -
-[JSS](https://github.com/jsstyles/jss)
+[Demo](http://cssinjs.github.io/examples/index.html#plugin-jss-extend) -
+[JSS](https://github.com/cssinjs/jss)
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/jsstyles/jss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cssinjs/lobby)
+
 
 Value of `extend` property can be a string, object and array. If string is used, it will look for a rule with such a name. If object - plain rule object is expected, if array - an array of plain rule obejcts is expected.
 
@@ -68,7 +69,7 @@ console.log(sheet.classes)
 
 ## Issues
 
-File a bug against [jsstyles/jss prefixed with \[jss-extend\]](https://github.com/jsstyles/jss/issues/new?title=[jss-extend]%20).
+File a bug against [cssinjs/jss prefixed with \[jss-extend\]](https://github.com/cssinjs/jss/issues/new?title=[jss-extend]%20).
 
 ## Run tests
 
