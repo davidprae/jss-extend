@@ -8,7 +8,7 @@ function extend(rule, newStyle, style) {
     if (rule.options && rule.options.sheet) {
       const refRule = rule.options.sheet.getRule(style.extend)
       if (refRule) {
-        if (refRule === rule) warn(`A rule tries to extend itself \r\n${rule.toString()}`)
+        if (refRule === rule) warn(`[JSS] A rule tries to extend itself \r\n${rule.toString()}`)
         else extend(rule, newStyle, refRule.originalStyle)
       }
     }
