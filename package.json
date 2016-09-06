@@ -43,13 +43,13 @@
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.0.1",
-    "jss": "^5.2.0",
+    "jss": "^5.5.0",
     "opener": "^1.4.1",
     "qunitjs": "^1.21.0",
     "rimraf": "^2.5.4",
     "webpack": "^1.13.1"
   },
   "peerDependencies": {
-    "jss": "^5.2.0"
+    "jss": "^5.5.0"
   }
 }
