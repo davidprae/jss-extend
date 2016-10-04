@@ -5,6 +5,7 @@ var jss = window.jss.default
 QUnit.module('Extend plugin', {
   setup: function () {
     jss.use(jssExtend.default())
+    jss.use(jssNested.default())
   },
   teardown: function () {
     jss.plugins.registry = []
@@ -49,6 +50,33 @@ test('nested extend', function () {
   }, {named: false})
   ok(sheet.getRule('a'))
   equal(sheet.toString(), 'a {\n  float: left;\n  display: none;\n  width: 1px;\n}')
+})
+
+test('nested extend with jss nested', function () {
+  var b = {
+    '&:hover': {
+      float: 'left',
+      extend: [{ color: 'black' }]
+    },
+    '&__child': {
+      height: '10px'
+    }
+  }
+  var sheet = jss.createStyleSheet({
+    'a': {
+      extend: b,
+      width: '1px',
+      '&:hover': {
+        width: '2px',
+        extend: { padding: '10px' }
+      },
+      '&__child': {
+        width: '10px'
+      }
+    }
+  }, {named: false})
+  ok(sheet.getRule('a'))
+  equal(sheet.toString(), 'a {\n  width: 1px;\n}\na:hover {\n  padding: 10px;\n  width: 2px;\n  color: black;\n  float: left;\n}\na__child {\n  width: 10px;\n  height: 10px;\n}')
 })
 
 test('extend using rule name', function () {

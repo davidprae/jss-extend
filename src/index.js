@@ -1,5 +1,7 @@
-const warn = console.warn.bind(console) // eslint-disable-line no-console
+import merge from 'lodash.merge'
 
+const warn = console.warn.bind(console) // eslint-disable-line no-console
+const isNested = (prop) => prop.indexOf('&') !== -1
 /**
  * Recursively extend styles.
  */
@@ -20,14 +22,22 @@ function extend(rule, newStyle, style) {
   }
   else {
     for (const prop in style.extend) {
-      if (prop === 'extend') extend(rule, newStyle, style.extend.extend)
-      else newStyle[prop] = style.extend[prop]
+      if (style[prop] && isNested(prop)) {
+        newStyle[prop] = merge(
+          extend(rule, {}, style[prop]),
+          extend(rule, {}, style.extend[prop])
+        )
+      }
+      else {
+        if (prop === 'extend') extend(rule, newStyle, style.extend.extend)
+        else newStyle[prop] = style.extend[prop]
+      }
     }
   }
 
   // Copy base style.
   for (const prop in style) {
-    if (prop !== 'extend') newStyle[prop] = style[prop]
+    if (prop !== 'extend' && !isNested(prop)) newStyle[prop] = style[prop]
   }
 
   return newStyle
