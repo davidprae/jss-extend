@@ -6,6 +6,7 @@ QUnit.module('Extend plugin', {
   setup: function () {
     jss.use(jssExtend.default())
     jss.use(jssNested.default())
+    jss.use(jssExpand.default())
   },
   teardown: function () {
     jss.plugins.registry = []
@@ -52,31 +53,62 @@ test('nested extend', function () {
   equal(sheet.toString(), 'a {\n  float: left;\n  display: none;\n  width: 1px;\n}')
 })
 
-test('nested extend with jss nested', function () {
+test('nested extend', function () {
   var b = {
     '&:hover': {
       float: 'left',
-      extend: [{ color: 'black' }]
-    },
-    '&__child': {
-      height: '10px'
+      width: '3px'
     }
   }
   var sheet = jss.createStyleSheet({
-    'a': {
+    a: {
       extend: b,
       width: '1px',
       '&:hover': {
         width: '2px',
-        extend: { padding: '10px' }
-      },
-      '&__child': {
-        width: '10px'
+        height: '2px'
       }
     }
   }, {named: false})
   ok(sheet.getRule('a'))
-  equal(sheet.toString(), 'a {\n  width: 1px;\n}\na:hover {\n  padding: 10px;\n  width: 2px;\n  color: black;\n  float: left;\n}\na__child {\n  width: 10px;\n  height: 10px;\n}')
+  equal(sheet.toString(), 'a {\n  width: 1px;\n}\na:hover {\n  float: left;\n  width: 3px;\n  height: 2px;\n}')
+})
+
+test('deep nested extend', function () {
+  var a = {
+    '&:hover': {width: '5px', height: '5px'},
+    border: {width: '3px'}
+  }
+  var b = {
+    extend: a,
+    '&:hover': {width: '4px'},
+    border: {color: 'blue'}
+  }
+  var c = {
+    extend: b,
+    '&:hover': {height: '2px'}
+  }
+  var d = {
+    extend: c,
+    '&:hover': {width: '2px'}
+  }
+  var sheet = jss.createStyleSheet({
+    a: {
+      extend: d,
+      width: '2px',
+      border: {
+        width: '1px',
+        color: 'red',
+        style: 'solid'
+      },
+      '&:hover': {
+        width: '1px',
+        height: '1px'
+      }
+    }
+  }, {named: false})
+  ok(sheet.getRule('a'))
+  equal(sheet.toString(), 'a {\n  border: 3px solid blue;\n  width: 2px;\n}\na:hover {\n  width: 5px;\n  height: 5px;\n}')
 })
 
 test('extend using rule name', function () {

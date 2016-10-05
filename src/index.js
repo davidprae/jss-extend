@@ -1,7 +1,7 @@
-import merge from 'lodash.merge'
-
 const warn = console.warn.bind(console) // eslint-disable-line no-console
-const isObject = (src) => src && typeof src == 'object'
+const isPlainObject = (src) =>
+  src && Object.prototype.toString.call(src) === '[object Object]'
+
 /**
  * Recursively extend styles.
  */
@@ -25,22 +25,24 @@ function extend(rule, newStyle, style) {
       if (prop === 'extend') {
         extend(rule, newStyle, style.extend.extend)
       }
-      else if (isObject(style[prop]) && isObject(style.extend[prop])) {
-        newStyle[prop] = merge(
-          extend(rule, {}, style[prop]),
-          extend(rule, {}, style.extend[prop])
-        )
+      else if (isPlainObject(style.extend[prop])) {
+        if (!newStyle[prop]) newStyle[prop] = {}
+        extend(rule, newStyle[prop], style.extend[prop])
       }
       else {
         newStyle[prop] = style.extend[prop]
       }
     }
   }
-
   // Copy base style.
   for (const prop in style) {
-    if (prop !== 'extend' && (!newStyle[prop] || !isObject(style[prop]))) {
-      newStyle[prop] = style[prop]
+    if (prop !== 'extend') {
+      if (isPlainObject(newStyle[prop]) && isPlainObject(style[prop])) {
+        extend(rule, newStyle[prop], style[prop])
+      }
+      else if (!newStyle[prop]) {
+        newStyle[prop] = style[prop]
+      }
     }
   }
 
