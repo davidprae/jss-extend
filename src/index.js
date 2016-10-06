@@ -1,6 +1,8 @@
 const warn = console.warn.bind(console) // eslint-disable-line no-console
-const isPlainObject = (src) =>
-  src && Object.prototype.toString.call(src) === '[object Object]'
+
+function isObject(obj) {
+  return obj && typeof obj === 'object' && !Array.isArray(obj)
+}
 
 /**
  * Recursively extend styles.
@@ -25,7 +27,7 @@ function extend(rule, newStyle, style) {
       if (prop === 'extend') {
         extend(rule, newStyle, style.extend.extend)
       }
-      else if (isPlainObject(style.extend[prop])) {
+      else if (isObject(style.extend[prop])) {
         if (!newStyle[prop]) newStyle[prop] = {}
         extend(rule, newStyle[prop], style.extend[prop])
       }
@@ -37,7 +39,7 @@ function extend(rule, newStyle, style) {
   // Copy base style.
   for (const prop in style) {
     if (prop !== 'extend') {
-      if (isPlainObject(newStyle[prop]) && isPlainObject(style[prop])) {
+      if (isObject(newStyle[prop]) && isObject(style[prop])) {
         extend(rule, newStyle[prop], style[prop])
       }
       else if (!newStyle[prop]) {
