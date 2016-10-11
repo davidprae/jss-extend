@@ -1,3 +1,8 @@
+## 2.0.2 / 2016-10-11
+
+- merge nested rules instead of overwriting
+- update tests to match jss@5.5.0
+
 ## 2.0.1 / 2016-08-01
 
 - fix regression because of merge
