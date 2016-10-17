@@ -1,3 +1,7 @@
+## 2.0.3 / 2016-10-17
+
+- fixed regression bug introduced in 2.0.2 - rules own properties should always override extended props.
+
 ## 2.0.2 / 2016-10-11
 
 - merge nested rules instead of overwriting

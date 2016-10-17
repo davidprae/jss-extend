@@ -38,13 +38,12 @@ function extend(rule, newStyle, style) {
   }
   // Copy base style.
   for (const prop in style) {
-    if (prop !== 'extend') {
-      if (isObject(newStyle[prop]) && isObject(style[prop])) {
-        extend(rule, newStyle[prop], style[prop])
-      }
-      else if (!newStyle[prop]) {
-        newStyle[prop] = style[prop]
-      }
+    if (prop === 'extend') continue
+    if (isObject(newStyle[prop]) && isObject(style[prop])) {
+      extend(rule, newStyle[prop], style[prop])
+    }
+    else {
+      newStyle[prop] = style[prop]
     }
   }
 

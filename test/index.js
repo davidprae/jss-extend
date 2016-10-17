@@ -27,6 +27,21 @@ test('simple extend', function () {
   equal(sheet.toString(), 'a {\n  float: left;\n}\nb {\n  float: left;\n  width: 1px;\n}')
 })
 
+test('ensure override order', function () {
+  var a = {
+    float: 'left',
+    color: 'red'
+  }
+  var sheet = jss.createStyleSheet({
+    a: {
+      extend: a,
+      float: 'right'
+    }
+  }, {named: false})
+  ok(sheet.getRule('a'))
+  equal(sheet.toString(), 'a {\n  float: right;\n  color: red;\n}')
+})
+
 test('multi extend', function () {
   var a = {float: 'left'}
   var b = {position: 'absolute'}
@@ -40,7 +55,7 @@ test('multi extend', function () {
   equal(sheet.toString(), 'c {\n  float: left;\n  position: absolute;\n  width: 1px;\n}')
 })
 
-test('nested extend', function () {
+test('nested extend 1', function () {
   var c = {float: 'left'}
   var b = {extend: c, display: 'none'}
   var sheet = jss.createStyleSheet({
@@ -53,7 +68,7 @@ test('nested extend', function () {
   equal(sheet.toString(), 'a {\n  float: left;\n  display: none;\n  width: 1px;\n}')
 })
 
-test('nested extend', function () {
+test('nested extend 2', function () {
   var b = {
     '&:hover': {
       float: 'left',
@@ -71,7 +86,7 @@ test('nested extend', function () {
     }
   }, {named: false})
   ok(sheet.getRule('a'))
-  equal(sheet.toString(), 'a {\n  width: 1px;\n}\na:hover {\n  float: left;\n  width: 3px;\n  height: 2px;\n}')
+  equal(sheet.toString(), 'a {\n  width: 1px;\n}\na:hover {\n  float: left;\n  width: 2px;\n  height: 2px;\n}')
 })
 
 test('deep nested extend', function () {
@@ -102,13 +117,12 @@ test('deep nested extend', function () {
         style: 'solid'
       },
       '&:hover': {
-        width: '1px',
-        height: '1px'
+        color: 'red'
       }
     }
   }, {named: false})
   ok(sheet.getRule('a'))
-  equal(sheet.toString(), 'a {\n  border: 3px solid blue;\n  width: 2px;\n}\na:hover {\n  width: 5px;\n  height: 5px;\n}')
+  equal(sheet.toString(), 'a {\n  border: 1px solid red;\n  width: 2px;\n}\na:hover {\n  width: 2px;\n  height: 2px;\n  color: red;\n}')
 })
 
 test('extend using rule name', function () {
