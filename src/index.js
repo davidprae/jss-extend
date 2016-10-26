@@ -1,4 +1,4 @@
-const warn = console.warn.bind(console) // eslint-disable-line no-console
+import warning from 'warning'
 
 function isObject(obj) {
   return obj && typeof obj === 'object' && !Array.isArray(obj)
@@ -12,7 +12,7 @@ function extend(rule, newStyle, style) {
     if (rule.options && rule.options.sheet) {
       const refRule = rule.options.sheet.getRule(style.extend)
       if (refRule) {
-        if (refRule === rule) warn(`[JSS] A rule tries to extend itself \r\n${rule.toString()}`)
+        if (refRule === rule) warning(false, '[JSS] A rule tries to extend itself \r\n%s', rule)
         else extend(rule, newStyle, refRule.originalStyle)
       }
     }
