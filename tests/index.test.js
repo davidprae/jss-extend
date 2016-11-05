@@ -11,10 +11,6 @@ var _expect = require('expect.js');
 
 var _expect2 = _interopRequireDefault(_expect);
 
-var _ = require('.');
-
-var _2 = _interopRequireDefault(_);
-
 var _jssNested = require('jss-nested');
 
 var _jssNested2 = _interopRequireDefault(_jssNested);
@@ -25,7 +21,11 @@ var _jssExpand2 = _interopRequireDefault(_jssExpand);
 
 var _jss = require('jss');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _ = require('.');
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 describe('jss-extend', function () {
   var jss = void 0;
@@ -277,19 +277,19 @@ function _get__(variableName) {
 function _get_original__(variableName) {
   switch (variableName) {
     case 'extend':
-      return _2.default;
+      return _2['default'];
 
     case 'create':
       return _jss.create;
 
     case 'nested':
-      return _jssNested2.default;
+      return _jssNested2['default'];
 
     case 'expand':
-      return _jssExpand2.default;
+      return _jssExpand2['default'];
 
     case 'expect':
-      return _expect2.default;
+      return _expect2['default'];
   }
 
   return undefined;
@@ -359,7 +359,7 @@ function _with__(object) {
     var result = callback();
 
     if (!!result && typeof result.then == 'function') {
-      result.then(reset).catch(reset);
+      result.then(reset)['catch'](reset);
     } else {
       reset();
     }
@@ -374,4 +374,4 @@ exports.__Rewire__ = _set__;
 exports.__set__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = _RewireAPI__;
-exports.default = _RewireAPI__;
+exports['default'] = _RewireAPI__;

@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 
 import expect from 'expect.js'
-import extend from '.'
 import nested from 'jss-nested'
 import expand from 'jss-expand'
 import {create} from 'jss'
+
+import extend from '.'
 
 describe('jss-extend', () => {
   let jss

@@ -1,4 +1,4 @@
 {
-  "extends": "eslint-config-jss",
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "extends": "eslint-config-jss"
 }

@@ -11,7 +11,7 @@ var _warning = require('warning');
 
 var _warning2 = _interopRequireDefault(_warning);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function isObject(obj) {
   return obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && !Array.isArray(obj);
@@ -71,7 +71,7 @@ var _DefaultExportValue = function _DefaultExportValue() {
   };
 };
 
-exports.default = _DefaultExportValue;
+exports['default'] = _DefaultExportValue;
 
 var _RewiredData__ = Object.create(null);
 
@@ -113,7 +113,7 @@ function _get__(variableName) {
 function _get_original__(variableName) {
   switch (variableName) {
     case 'warning':
-      return _warning2.default;
+      return _warning2['default'];
 
     case 'extend':
       return extend;
@@ -189,7 +189,7 @@ function _with__(object) {
     var result = callback();
 
     if (!!result && typeof result.then == 'function') {
-      result.then(reset).catch(reset);
+      result.then(reset)['catch'](reset);
     } else {
       reset();
     }

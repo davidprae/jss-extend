@@ -1,3 +1,9 @@
+## 2.0.5 / 2016-11-05
+
+- gitignore tests dir
+- add es3 transforms
+- other small changes
+
 ## 2.0.4 / 2016-10-26
 
 - migrate to mocha

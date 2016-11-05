@@ -56,7 +56,7 @@ function extend(rule, newStyle, style) {
  * @param {Rule} rule
  * @api public
  */
-export default () => rule => {
+export default () => (rule) => {
   if (!rule.style || !rule.style.extend) return
   rule.style = extend(rule, {}, rule.style)
 }
