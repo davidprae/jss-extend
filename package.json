@@ -1,7 +1,7 @@
 {
   "name": "jss-extend",
   "description": "JSS plugin that enables inheritance",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "author": {
     "name": "Oleg Slobodskoi",
     "email": "oleg008@gmail.com"
@@ -28,8 +28,8 @@
     "build:dist": "npm run build:dist:max && npm run build:dist:min",
     "build:dist:max": "cross-env NODE_ENV=development webpack src/index.js dist/jss-extend.js",
     "build:dist:min": "cross-env NODE_ENV=production webpack src/index.js dist/jss-extend.min.js",
-    "clean": "rimraf '{lib,dist,tests,tmp}/*'",
-    "lint": "eslint ./src ./benchmark",
+    "clean": "rimraf {lib,dist,tests,tmp}/*",
+    "lint": "eslint ./src",
     "lint:staged": "lint-staged",
     "test": "cross-env NODE_ENV=test karma start --single-run ",
     "test:watch": "cross-env NODE_ENV=test karma start",

@@ -1,3 +1,7 @@
+## 2.0.6 / 2016-11-05
+
+- fix main tests suite integration
+
 ## 2.0.5 / 2016-11-05
 
 - gitignore tests dir

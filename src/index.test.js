@@ -5,7 +5,7 @@ import nested from 'jss-nested'
 import expand from 'jss-expand'
 import {create} from 'jss'
 
-import extend from '.'
+import extend from './index'
 
 describe('jss-extend', () => {
   let jss
