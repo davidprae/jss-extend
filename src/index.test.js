@@ -7,6 +7,10 @@ import {create} from 'jss'
 
 import extend from './index'
 
+const settings = {
+  generateClassName: (str, rule) => `${rule.name}-id`
+}
+
 describe('jss-extend', () => {
   let jss
   let warning
@@ -15,7 +19,7 @@ describe('jss-extend', () => {
     extend.__Rewire__('warning', (condition, message) => {
       warning = message
     })
-    jss = create().use(
+    jss = create(settings).use(
       extend(),
       nested(),
       expand()
@@ -38,17 +42,17 @@ describe('jss-extend', () => {
           extend: a,
           width: '1px'
         }
-      }, {named: false})
+      })
     })
 
     it('should extend', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.getRule('b')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  float: left;\n' +
         '}\n' +
-        'b {\n' +
+        '.b-id {\n' +
         '  float: left;\n' +
         '  width: 1px;\n' +
         '}'
@@ -69,13 +73,13 @@ describe('jss-extend', () => {
           extend: a,
           float: 'right'
         }
-      }, {named: false})
+      })
     })
 
     it('should have correct order', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  float: right;\n' +
         '  color: red;\n' +
         '}'
@@ -94,13 +98,13 @@ describe('jss-extend', () => {
           extend: [a, b],
           width: '1px'
         }
-      }, {named: false})
+      })
     })
 
     it('should have correct output', () => {
       expect(sheet.getRule('c')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'c {\n' +
+        '.c-id {\n' +
         '  float: left;\n' +
         '  position: absolute;\n' +
         '  width: 1px;\n' +
@@ -120,13 +124,13 @@ describe('jss-extend', () => {
           extend: b,
           width: '1px'
         }
-      }, {named: false})
+      })
     })
 
     it('should should have correct output', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  float: left;\n' +
         '  display: none;\n' +
         '  width: 1px;\n' +
@@ -154,16 +158,16 @@ describe('jss-extend', () => {
             height: '2px'
           }
         }
-      }, {named: false})
+      })
     })
 
     it('should have correct output', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  width: 1px;\n' +
         '}\n' +
-        'a:hover {\n' +
+        '.a-id:hover {\n' +
         '  float: left;\n' +
         '  width: 2px;\n' +
         '  height: 2px;\n' +
@@ -206,17 +210,17 @@ describe('jss-extend', () => {
             color: 'red'
           }
         }
-      }, {named: false})
+      })
     })
 
     it('should have correct output', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  border: 1px solid red;\n' +
         '  width: 2px;\n' +
         '}\n' +
-        'a:hover {\n' +
+        '.a-id:hover {\n' +
         '  width: 2px;\n' +
         '  height: 2px;\n' +
         '  color: red;\n' +
@@ -235,17 +239,17 @@ describe('jss-extend', () => {
           extend: 'a',
           width: '1px'
         }
-      }, {named: false})
+      })
     })
 
     it('should have correct output', () => {
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.getRule('b')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  float: left;\n' +
         '}\n' +
-        'b {\n' +
+        '.b-id {\n' +
         '  float: left;\n' +
         '  width: 1px;\n' +
         '}'
@@ -262,14 +266,14 @@ describe('jss-extend', () => {
           extend: 'a',
           width: '1px'
         }
-      }, {named: false})
+      })
     })
 
     it('error if extend using same rule name', () => {
       expect(warning).to.be('[JSS] A rule tries to extend itself \r\n%s')
       expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
-        'a {\n' +
+        '.a-id {\n' +
         '  width: 1px;\n' +
         '}'
       )
