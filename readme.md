@@ -1,6 +1,4 @@
-![JSS logo](https://avatars1.githubusercontent.com/u/9503099?v=3&s=60)
-
-## JSS plugin that enables inheritance
+# JSS plugin that enables inheritance
 
 This plugin implements a custom `extend` style property.
 
