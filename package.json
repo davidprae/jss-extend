@@ -1,7 +1,7 @@
 {
   "name": "jss-extend",
   "description": "JSS plugin that enables inheritance",
-  "version": "2.0.6",
+  "version": "3.0.0",
   "author": {
     "name": "Oleg Slobodskoi",
     "email": "oleg008@gmail.com"
@@ -57,9 +57,9 @@
     "eslint-plugin-react": "^6.5.0",
     "expect.js": "^0.3.1",
     "json-loader": "^0.5.4",
-    "jss": "^5.5.0",
-    "jss-expand": "^1.5.2",
-    "jss-nested": "^2.4.3",
+    "jss": "^6.0.0",
+    "jss-expand": "^2.0.0",
+    "jss-nested": "^3.0.0",
     "karma": "^1.1.1",
     "karma-benchmark": "^0.6.0",
     "karma-benchmark-reporter": "^0.1.1",
@@ -79,7 +79,7 @@
     "webpack": "^1.12.2"
   },
   "peerDependencies": {
-    "jss": "^5.5.0"
+    "jss": "^6.0.0"
   },
   "lint-staged": {
     "./src/*.js": [

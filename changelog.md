@@ -1,3 +1,8 @@
+## 3.0.0 / 2016-12-09
+
+- remove dep to named option
+- update to jss 6.0
+
 ## 2.0.6 / 2016-11-05
 
 - fix main tests suite integration
