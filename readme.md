@@ -13,16 +13,10 @@ Value of `extend` property can be a string, object and array. If string is used,
 Rule's own properties always take precedence over extended rules, so you can always override the extended definition.
 
 
-## Usage examples
+## Examples
 
 ```javascript
-import jss from 'jss'
-import extend from 'jss-extend'
-
-// Setup jss plugins.
-jss.use(extend())
-
-const sheet = jss.createStyleSheet({
+const styles = {
   redContainer: {
     background: 'red'
   },
@@ -30,41 +24,28 @@ const sheet = jss.createStyleSheet({
     extend: 'redContainer',
     'font-size': '20px'
   }
-})
+}
+```
 
+```javascript
 const redContainer = {
   background: 'red'
 }
-const sheet = jss.createStyleSheet({
+const styles = {
   container: {
     extend: redContainer, // Can be an array of styles
     'font-size': '20px'
   }
-})
-
-// Without `extend`, using ES7.
-const sheet = jss.createStyleSheet({
-  container: {
-    ...redContainer,
-    'font-size': '20px'
-  }
-})
-
-console.log(sheet.toString())
-```
-
-```css
-.jss-0-0 {
-  background: red;
-  font-size: 20px;
 }
 ```
 
-```javascript
-console.log(sheet.classes)
-```
-```javascript
-{container: 'jss-0-0'}
+Compiles to:
+
+```css
+.jss-23g44j5 {
+  background: red;
+  font-size: 20px;
+}
 ```
 
 ## Issues
