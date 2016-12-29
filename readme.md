@@ -5,7 +5,7 @@ This plugin implements a custom `extend` style property.
 [Demo](http://cssinjs.github.io/examples/index.html#plugin-jss-extend) -
 [JSS](https://github.com/cssinjs/jss)
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/cssinjs/lobby)
+[![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/cssinjs/lobby)
 
 
 Value of `extend` property can be a string, object and array. If string is used, it will look for a rule with such a name. If object - plain rule object is expected, if array - an array of plain rule objects is expected.
