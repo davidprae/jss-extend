@@ -5,7 +5,8 @@
 This plugin implements a custom `extend` style property.
 
 [Simple demo](http://cssinjs.github.io/examples/plugins/jss-extend/simple/)
-[Mukti objects demo](http://cssinjs.github.io/examples/plugins/jss-extend/simple/)
+
+[Multi objects demo](http://cssinjs.github.io/examples/plugins/jss-extend/simple/)
 
 Value of `extend` property can be a string, object and array. If string is used, it will look for a rule with such a name. If object - plain rule object is expected, if array - an array of plain rule objects is expected.
 
