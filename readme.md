@@ -4,10 +4,6 @@
 
 This plugin implements a custom `extend` style property.
 
-[Simple demo](http://cssinjs.github.io/examples/plugins/jss-extend/simple/)
-
-[Multi objects demo](http://cssinjs.github.io/examples/plugins/jss-extend/multi/)
-
 Value of `extend` property can be a string, object and array. If string is used, it will look for a rule with such a name. If object - plain rule object is expected, if array - an array of plain rule objects is expected.
 
 Rule's own properties always take precedence over extended rules, so you can always override the extended definition.
@@ -47,6 +43,12 @@ Compiles to:
   font-size: 20px;
 }
 ```
+
+## Demo
+
+[Simple demo](http://cssinjs.github.io/examples/plugins/jss-extend/simple/)
+
+[Multi objects demo](http://cssinjs.github.io/examples/plugins/jss-extend/multi/)
 
 ## Issues
 
