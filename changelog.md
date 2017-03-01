@@ -1,3 +1,7 @@
+## 3.0.1 / 2017-03-01
+
+- fix nested object extending
+
 ## 3.0.0 / 2016-12-09
 
 - remove dep to named option
