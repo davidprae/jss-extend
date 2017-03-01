@@ -42,6 +42,9 @@ function extend(rule, newStyle, style) {
     if (isObject(newStyle[prop]) && isObject(style[prop])) {
       extend(rule, newStyle[prop], style[prop])
     }
+    else if (isObject(style[prop])) {
+      newStyle[prop] = extend(rule, {}, style[prop])
+    }
     else {
       newStyle[prop] = style[prop]
     }
