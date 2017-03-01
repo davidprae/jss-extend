@@ -229,6 +229,42 @@ describe('jss-extend', () => {
     })
   })
 
+  describe('multi child extend with css state', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        base: {
+          '&:hover': {width: '1px'}
+        },
+        child1: {
+          extend: 'base',
+          '&:hover': {width: '5px'},
+        },
+        child2: {
+          extend: 'base'
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.getRule('base')).to.not.be(undefined)
+      expect(sheet.getRule('child1')).to.not.be(undefined)
+      expect(sheet.getRule('child2')).to.not.be(undefined)
+      expect(sheet.toString()).to.be(
+        '.base-id:hover {\n' +
+        '  width: 1px;\n' +
+        '}\n' +
+        '.child1-id:hover {\n' +
+        '  width: 5px;\n' +
+        '}\n' +
+        '.child2-id:hover {\n' +
+        '  width: 1px;\n' +
+        '}'
+      )
+    })
+  })
+
   describe('extend using rule name', () => {
     let sheet
 
