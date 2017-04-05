@@ -11,7 +11,10 @@ function extend(style, rule, sheet, newStyle = {}) {
       const refRule = sheet.getRule(style.extend)
       if (refRule) {
         if (refRule === rule) warning(false, '[JSS] A rule tries to extend itself \r\n%s', rule)
-        else extend(refRule.originalStyle, rule, sheet, newStyle)
+        else if (refRule.options.parent) {
+          const originalStyle = refRule.options.parent.rules.raw[style.extend]
+          extend(originalStyle, rule, sheet, newStyle)
+        }
       }
     }
   }
@@ -57,8 +60,10 @@ function extend(style, rule, sheet, newStyle = {}) {
  * @param {Rule} rule
  * @api public
  */
-export default () => (rule, sheet) => {
-  const {style} = rule
-  if (!style || !style.extend) return
-  rule.style = extend(style, rule, sheet)
+export default function jssExtend() {
+  function onProcessStyle(style, rule, sheet) {
+    return style.extend ? extend(style, rule, sheet) : style
+  }
+
+  return {onProcessStyle}
 }
