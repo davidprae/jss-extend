@@ -61,7 +61,7 @@ function extend(style, rule, sheet, newStyle = {}) {
  * @api public
  */
 export default function jssExtend() {
-  function onProcessStyle(style, rule, sheet) {
+  function onProcessStyle(style, rule, sheet) {
     return style.extend ? extend(style, rule, sheet) : style
   }
 

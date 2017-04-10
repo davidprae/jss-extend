@@ -1,3 +1,7 @@
+## 4.0.0 / 2017-04-10
+
+- support jss 7.0
+
 ## 3.0.1 / 2017-03-01
 
 - fix nested object extending

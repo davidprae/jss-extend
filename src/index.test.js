@@ -8,7 +8,7 @@ import {create} from 'jss'
 import extend from './index'
 
 const settings = {
-  generateClassName: (rule) => `${rule.name}-id`
+  generateClassName: rule => `${rule.name}-id`
 }
 
 describe('jss-extend', () => {
