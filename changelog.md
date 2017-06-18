@@ -1,3 +1,7 @@
+## 5.0.0 / 2017-06-20
+
+- support jss 8
+
 ## 4.0.1 / 2017-04-18
 
 - update jss-nested and jss-extend dev deps
