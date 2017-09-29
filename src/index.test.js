@@ -4,6 +4,7 @@ import expect from 'expect.js'
 import nested from 'jss-nested'
 import expand from 'jss-expand'
 import {create} from 'jss'
+import Observable from 'zen-observable'
 
 import extend from './index'
 
@@ -311,6 +312,28 @@ describe('jss-extend', () => {
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
         '  width: 1px;\n' +
+        '}'
+      )
+    })
+  })
+
+  describe('support observable value', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        a: {
+          width: new Observable((observer) => {
+            observer.next(1)
+          })
+        }
+      })
+    })
+
+    it('should generate correct CSS', () => {
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  width: 1;\n' +
         '}'
       )
     })
