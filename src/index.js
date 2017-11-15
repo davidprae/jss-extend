@@ -2,6 +2,8 @@ import warning from 'warning'
 import isObservable from 'is-observable'
 
 const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj) && !isObservable(obj)
+const now = Date.now()
+const baseStyleNs = `baseStyle${now}`
 
 /**
  * Recursively extend styles.
@@ -55,6 +57,16 @@ function extend(style, rule, sheet, newStyle = {}) {
   return newStyle
 }
 
+function copyBase(style, newStyle = {}) {
+  for (const prop in style) {
+    if (prop !== 'extend') {
+      newStyle[prop] = style[prop]
+    }
+  }
+
+  return newStyle
+}
+
 /**
  * Handle `extend` property.
  *
@@ -66,5 +78,27 @@ export default function jssExtend() {
     return style.extend ? extend(style, rule, sheet) : style
   }
 
-  return {onProcessStyle}
+  function onUpdate(data, rule) {
+    const {style, sheet} = rule
+    if (!style || (style.extend == null && rule[baseStyleNs] == null)) return
+
+    if (rule[baseStyleNs] == null) {
+      rule[baseStyleNs] = copyBase(style)
+    }
+
+    const extendingStyle = {
+      ...rule[baseStyleNs],
+      extend: style.extend
+    }
+
+    for (const prop in style) {
+      if (rule[baseStyleNs][prop] == null) {
+        delete style[prop]
+      }
+    }
+
+    extend(extendingStyle, rule, sheet, style)
+  }
+
+  return {onProcessStyle, onUpdate}
 }

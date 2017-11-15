@@ -317,6 +317,48 @@ describe('jss-extend', () => {
     })
   })
 
+  describe('functional extend', () => {
+    let sheet
+
+    beforeEach(() => {
+      const b = {display: 'block'}
+      sheet = jss.createStyleSheet({
+        a: {
+          extend: data => data.block && b,
+          color: 'red',
+          '& span': {
+            extend: data => data.block && b,
+            color: 'blue'
+          }
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+      sheet.update({block: true})
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  color: red;\n' +
+        '  display: block;\n' +
+        '}\n' +
+        '.a-id span {\n' +
+        '  color: blue;\n' +
+        '  display: block;\n' +
+        '}'
+      )
+      sheet.update({block: false})
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  color: red;\n' +
+        '}\n' +
+        '.a-id span {\n' +
+        '  color: blue;\n' +
+        '}'
+      )
+    })
+  })
+
   describe('support observable value', () => {
     let sheet
 
