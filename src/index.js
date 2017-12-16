@@ -1,7 +1,6 @@
 import warning from 'warning'
-import isObservable from 'is-observable'
 
-const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj) && !isObservable(obj)
+const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj)
 
 /**
  * Recursively extend styles.

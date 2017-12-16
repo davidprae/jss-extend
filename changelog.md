@@ -1,3 +1,7 @@
+## 6.1.0 / 2017-12-16
+
+- remove isObservable checks, update deps
+
 ## 6.0.0 / 2017-09-30
 
 - support jss 9
