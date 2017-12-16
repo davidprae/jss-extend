@@ -1,12 +1,8 @@
 import warning from 'warning'
 
-<<<<<<< HEAD
-const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj) && !isObservable(obj)
+const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj)
 const now = Date.now()
 const baseStyleNs = `baseStyle${now}`
-=======
-const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj)
->>>>>>> remove isObservable check
 
 /**
  * Recursively extend styles.
