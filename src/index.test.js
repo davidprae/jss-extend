@@ -317,6 +317,68 @@ describe('jss-extend', () => {
     })
   })
 
+  describe('extend using function values inside function rules', () => {
+    let sheet
+
+    beforeEach(() => {
+      const styles = {
+        a: () => ({
+          height: '200px',
+          extend: data => data.redContainer
+        })
+      }
+
+      sheet = jss.createStyleSheet(styles, {link: true}).attach()
+
+      sheet.update({
+        redContainer: {
+          background: 'red'
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  height: 200px;\n' +
+        '  background: red;\n' +
+        '}'
+      )
+    })
+  })
+
+  describe('extend using function rules', () => {
+    let sheet
+
+    beforeEach(() => {
+      const styles = {
+        a: data => ({
+          height: '200px',
+          extend: data.redContainer
+        })
+      }
+
+      sheet = jss.createStyleSheet(styles, {link: true}).attach()
+
+      sheet.update({
+        redContainer: {
+          background: 'red'
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  height: 200px;\n' +
+        '  background: red;\n' +
+        '}'
+      )
+    })
+  })
+
   describe('functional extend', () => {
     let sheet
 
