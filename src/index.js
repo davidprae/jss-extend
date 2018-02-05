@@ -1,11 +1,12 @@
 import warning from 'warning'
 
 const isObject = obj => obj && typeof obj === 'object' && !Array.isArray(obj)
-const baseStyleNs = `baseStyle${Date.now()}`
+const valueNs = `extendCurrValue${Date.now()}`
 
 function mergeExtend(style, rule, sheet, newStyle) {
+  const extendType = typeof style.extend
   // Extend using a rule name.
-  if (typeof style.extend === 'string') {
+  if (extendType === 'string') {
     if (!sheet) return
     const refRule = sheet.getRule(style.extend)
     if (!refRule) return
@@ -13,10 +14,16 @@ function mergeExtend(style, rule, sheet, newStyle) {
       warning(false, '[JSS] A rule tries to extend itself \r\n%s', rule)
       return
     }
-    if (refRule.options.parent) {
-      const originalStyle = refRule.options.parent.rules.raw[style.extend]
+    const {parent} = refRule.options
+    if (parent) {
+      const originalStyle = parent.rules.raw[style.extend]
       extend(originalStyle, rule, sheet, newStyle)
     }
+    return
+  }
+
+  if (extendType === 'function') {
+    rule[extendFnNs] = style.extend
     return
   }
 
@@ -43,12 +50,7 @@ function mergeExtend(style, rule, sheet, newStyle) {
   }
 }
 
-/**
- * Recursively extend styles.
- */
-function extend(style, rule, sheet, newStyle = {}) {
-  mergeExtend(style, rule, sheet, newStyle)
-
+function mergeRest(style, rule, sheet, newStyle) {
   // Copy base style.
   for (const prop in style) {
     if (prop === 'extend') continue
@@ -64,17 +66,14 @@ function extend(style, rule, sheet, newStyle = {}) {
 
     newStyle[prop] = style[prop]
   }
-
-  return newStyle
 }
 
-function copyBase(style, newStyle = {}) {
-  for (const prop in style) {
-    if (prop !== 'extend') {
-      newStyle[prop] = style[prop]
-    }
-  }
-
+/**
+ * Recursively extend styles.
+ */
+function extend(style, rule, sheet, newStyle = {}) {
+  mergeExtend(style, rule, sheet, newStyle)
+  mergeRest(style, rule, sheet, newStyle)
   return newStyle
 }
 
@@ -86,31 +85,31 @@ function copyBase(style, newStyle = {}) {
  */
 export default function jssExtend() {
   function onProcessStyle(style, rule, sheet) {
-    return 'extend' in style ? extend(style, rule, sheet) : style
+    if ('extend' in style) return extend(style, rule, sheet)
+    return style
   }
 
-  function onUpdate(data, rule, sheet) {
-    if (!('style' in rule)) return
+  function onChangeValue(value, prop, rule) {
+    if (prop !== 'extend') return value
 
-    const {style} = rule
-
-    if (rule[baseStyleNs] == null) {
-      rule[baseStyleNs] = copyBase(style)
-    }
-
-    const extendingStyle = {
-      ...rule[baseStyleNs],
-      extend: style.extend
-    }
-
-    for (const prop in style) {
-      if (rule[baseStyleNs][prop] == null) {
-        delete style[prop]
+    // Value is empty, remove properties set previously.
+    if (value == null || value === false) {
+      for (const key in rule[valueNs]) {
+        rule.prop(key, null)
       }
+      rule[valueNs] = null
+      return null
     }
 
-    extend(extendingStyle, rule, sheet, style)
+    for (const key in value) {
+      rule.prop(key, value[key])
+    }
+    rule[valueNs] = value
+
+    // Make sure we don't set the value in the core.
+    return null
   }
 
-  return {onProcessStyle, onUpdate}
+
+  return {onProcessStyle, onChangeValue}
 }

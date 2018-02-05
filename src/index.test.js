@@ -4,7 +4,6 @@ import expect from 'expect.js'
 import nested from 'jss-nested'
 import expand from 'jss-expand'
 import {create} from 'jss'
-import Observable from 'zen-observable'
 
 import extend from './index'
 
@@ -317,69 +316,7 @@ describe('jss-extend', () => {
     })
   })
 
-  describe('extend using function values inside function rules without attributes', () => {
-    let sheet
-
-    beforeEach(() => {
-      const styles = {
-        a: () => ({
-          height: '200px',
-          extend: data => data.redContainer
-        })
-      }
-
-      sheet = jss.createStyleSheet(styles, {link: true}).attach()
-
-      sheet.update({
-        redContainer: {
-          background: 'red'
-        }
-      })
-    })
-
-    it('should have correct output', () => {
-      expect(sheet.getRule('a')).to.not.be(undefined)
-      expect(sheet.toString()).to.be(
-        '.a-id {\n' +
-        '  height: 200px;\n' +
-        '  background: red;\n' +
-        '}'
-      )
-    })
-  })
-
-  describe('extend using function values inside function rules with data attribute', () => {
-    let sheet
-
-    beforeEach(() => {
-      const styles = {
-        a: data => ({
-          height: '200px',
-          extend: () => data.redContainer
-        })
-      }
-
-      sheet = jss.createStyleSheet(styles, {link: true}).attach()
-
-      sheet.update({
-        redContainer: {
-          background: 'red'
-        }
-      })
-    })
-
-    it('should have correct output', () => {
-      expect(sheet.getRule('a')).to.not.be(undefined)
-      expect(sheet.toString()).to.be(
-        '.a-id {\n' +
-        '  height: 200px;\n' +
-        '  background: red;\n' +
-        '}'
-      )
-    })
-  })
-
-  describe('extend using function rules', () => {
+  describe('extend inside of a function rule', () => {
     let sheet
 
     beforeEach(() => {
@@ -410,7 +347,7 @@ describe('jss-extend', () => {
     })
   })
 
-  describe('functional extend', () => {
+  describe('extend function', () => {
     let sheet
 
     beforeEach(() => {
@@ -440,35 +377,15 @@ describe('jss-extend', () => {
         '  display: block;\n' +
         '}'
       )
+
       sheet.update({block: false})
+
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
         '  color: red;\n' +
         '}\n' +
         '.a-id span {\n' +
         '  color: blue;\n' +
-        '}'
-      )
-    })
-  })
-
-  describe('support observable value', () => {
-    let sheet
-
-    beforeEach(() => {
-      sheet = jss.createStyleSheet({
-        a: {
-          width: new Observable((observer) => {
-            observer.next(1)
-          })
-        }
-      })
-    })
-
-    it('should generate correct CSS', () => {
-      expect(sheet.toString()).to.be(
-        '.a-id {\n' +
-        '  width: 1;\n' +
         '}'
       )
     })
