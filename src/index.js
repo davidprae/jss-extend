@@ -22,11 +22,6 @@ function mergeExtend(style, rule, sheet, newStyle) {
     return
   }
 
-  if (extendType === 'function') {
-    rule[extendFnNs] = style.extend
-    return
-  }
-
   // Extend using an array of objects.
   if (Array.isArray(style.extend)) {
     for (let index = 0; index < style.extend.length; index++) {
