@@ -4,7 +4,7 @@
 
 This plugin implements a custom property `extend` which allows you to mix in styles in various ways.
 
-Rule's own properties always take precedence over extended rules, so you can always override the extended definition. Exception is function value.
+Style object own properties always take precedence over extended objects, so you can always override the extended definition. Exception is function values.
 
 ## Use style object reference
 ```javascript
