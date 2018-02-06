@@ -293,7 +293,7 @@ describe('jss-extend', () => {
     })
   })
 
-  describe('extend using rule name', () => {
+  describe('extend using rule name with cyclic warning', () => {
     let sheet
 
     beforeEach(() => {
