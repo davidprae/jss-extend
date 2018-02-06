@@ -4,7 +4,6 @@ import expect from 'expect.js'
 import nested from 'jss-nested'
 import expand from 'jss-expand'
 import {create} from 'jss'
-import Observable from 'zen-observable'
 
 import extend from './index'
 
@@ -294,7 +293,7 @@ describe('jss-extend', () => {
     })
   })
 
-  describe('extend using rule name', () => {
+  describe('extend using rule name with cyclic warning', () => {
     let sheet
 
     beforeEach(() => {
@@ -317,23 +316,76 @@ describe('jss-extend', () => {
     })
   })
 
-  describe('support observable value', () => {
+  describe('extend inside of a function rule', () => {
     let sheet
 
     beforeEach(() => {
-      sheet = jss.createStyleSheet({
-        a: {
-          width: new Observable((observer) => {
-            observer.next(1)
-          })
+      const styles = {
+        a: data => ({
+          height: '200px',
+          extend: data.redContainer
+        })
+      }
+
+      sheet = jss.createStyleSheet(styles, {link: true}).attach()
+
+      sheet.update({
+        redContainer: {
+          background: 'red'
         }
       })
     })
 
-    it('should generate correct CSS', () => {
+    it('should have correct output', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
       expect(sheet.toString()).to.be(
         '.a-id {\n' +
-        '  width: 1;\n' +
+        '  height: 200px;\n' +
+        '  background: red;\n' +
+        '}'
+      )
+    })
+  })
+
+  describe('extend function', () => {
+    let sheet
+
+    beforeEach(() => {
+      const b = {display: 'block'}
+      sheet = jss.createStyleSheet({
+        a: {
+          extend: data => data.block && b,
+          color: 'red',
+          '& span': {
+            extend: data => data.block && b,
+            color: 'blue'
+          }
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.getRule('a')).to.not.be(undefined)
+      sheet.update({block: true})
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  color: red;\n' +
+        '  display: block;\n' +
+        '}\n' +
+        '.a-id span {\n' +
+        '  color: blue;\n' +
+        '  display: block;\n' +
+        '}'
+      )
+
+      sheet.update({block: false})
+
+      expect(sheet.toString()).to.be(
+        '.a-id {\n' +
+        '  color: red;\n' +
+        '}\n' +
+        '.a-id span {\n' +
+        '  color: blue;\n' +
         '}'
       )
     })
