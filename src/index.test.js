@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
+import {stripIndent} from 'common-tags'
 import expect from 'expect.js'
 import nested from 'jss-nested'
 import expand from 'jss-expand'
@@ -290,6 +291,37 @@ describe('jss-extend', () => {
         '  width: 1px;\n' +
         '}'
       )
+    })
+  })
+
+  describe('extend value with fallbacks', () => {
+    let sheet
+
+    beforeEach(() => {
+      sheet = jss.createStyleSheet({
+        a: {
+          color: 'blue',
+          fallbacks: {color: 'green'}
+        },
+        b: {
+          extend: 'a',
+          float: 'left'
+        }
+      })
+    })
+
+    it('should have correct output', () => {
+      expect(sheet.toString()).to.be(stripIndent`
+        .a-id {
+          color: green;
+          color: blue;
+        }
+        .b-id {
+          color: green;
+          color: blue;
+          float: left;
+        }
+      `)
     })
   })
 
